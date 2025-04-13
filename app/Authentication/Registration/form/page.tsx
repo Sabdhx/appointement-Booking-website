@@ -2,16 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { registration } from "@/action/user";
 
-type Props = {
-  submission: (formData: FormData) => void;
-};
 
-function Form({ submission }: Props) {
+
+function Form() {
   const handleFormData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    submission(formData);
+    registration(formData);
   }
   return (
     <div className="w-full max-w-md">
