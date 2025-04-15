@@ -1,27 +1,29 @@
-import {model, models, Schema} from "mongoose";
+import { model, models, Schema, Types } from "mongoose";
 
-const user= new Schema({
-  role:{
-    type:String,
-    enum:["normalUser","provider"]
+const user = new Schema({
+  role: {
+    type: String,
+    enum: ["normalUser", "provider"],
   },
-   username:{
-    type:String,
-    require:true,
+  username: {
+    type: String,
+    require: true,
   },
-  email:{
-    type:String,
-    require:true,
-    unique:[true,"Already exists"]
+  email: {
+    type: String,
+    require: true,
+    unique: [true, "Already exists"],
   },
-  image:{
-    type:String,
+  image: {
+    type: String,
   },
-  password:{
-    type:String,
-    require:true
-  }
-})
+  password: {
+    type: String,
+    require: true,
+  },
+  
 
-const User = models.User || model("User",user);
-export default User; 
+});
+
+const User = models.User || model("User", user);
+export default User;
