@@ -1,20 +1,22 @@
+"use client"
+import { useSession } from "next-auth/react";
 import FormComponent from "./formComponent/FormComponent";
 
 function page() {
+  const session = useSession()
   async function handleSubmit(formData: FormData) {
-    "use server";
+ 
     const input = formData.get("Input");
-    console.log("✅ Server received input:", input);
-    // You can now save this to a DB or do anything server-side
+    console.log("Server received input:", input);
   }
-
+    console.log(session)
   return (
     <div className="text-center">
       <div className="mt-[30vh]">
         <h1 className="text-[50px] font-bold">
           Universal Appointment Booking System
         </h1>
-        <FormComponent handleSubmit={handleSubmit} />
+        <FormComponent submitting={handleSubmit} />
       </div>
     </div>
   );

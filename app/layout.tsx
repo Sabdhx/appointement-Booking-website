@@ -1,9 +1,8 @@
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./navBar/page";
-
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,11 +32,10 @@ export default function RootLayout({
         <div className="flex justify-between mx-[50px]">
           <div></div>
           <div>
-          <Navbar/>
+            <Navbar />
           </div>
         </div>
-
-        {children}
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

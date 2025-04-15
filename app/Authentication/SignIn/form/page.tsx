@@ -4,15 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react"
+import { redirect } from "next/navigation";
+import React from "react";
 
 
 
 function Form() {
-
-
+ 
+  const handleSubmit=(e: React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    Login(formData);
+    redirect("/HeroSection")
+  }
   return (
     <div className="flex min-h-[70vh] items-center justify-center">
-      <form action={Login} className="w-full max-w-md space-y-6 rounded-lg border p-8 shadow-sm">
+      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6 rounded-lg border p-8 shadow-sm">
         <div className="space-y-2 text-center">
           <h1 className="text-2xl font-bold">Welcome back</h1>
           <p className="text-muted-foreground">Enter your credentials to sign in</p>

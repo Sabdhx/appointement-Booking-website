@@ -15,35 +15,44 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials: any) => {
         const email = credentials.email as string;
         const password = credentials.password as string;
-
         if (!email || !password) {
           throw new CredentialsSignin("Please provide both email and password");
         }
-
         await DBConnect();
-
-        // ✅ Use findOne instead of find
         const user = await User.findOne({ email }).select("+password +role");
-
-        // ✅ Check if user exists
         if (!user) {
           throw new Error("Invalid email or password");
         }
-
-        // ✅ Compare password
         const isPasswordCorrect = await compare(password, user.password);
         if (!isPasswordCorrect) {
           throw new Error("Password did not match");
         }
-
-        // ✅ Return user info to be stored in session
         return {
           id: user._id.toString(),
-          username: user.username,
+          name: user.username,
           email: user.email,
           role: user.role,
         };
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }: any) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
+  session: {
+    strategy: "jwt",
+  },
 });

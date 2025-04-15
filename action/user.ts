@@ -5,21 +5,31 @@ import User from "@/models/user";
 import {hash} from "bcryptjs"
 import { CredentialsSignin } from "next-auth";
 import { signIn } from "@/auth";
+import { redirect } from "next/navigation";
 
-export const Login=async(formData:FormData)=>{
+
+
+export const Login = async (formData: FormData) => {
   const email = formData.get("email");
-  const password = formData.get("password")
+  const password = formData.get("password");
 
   try {
-    await signIn("credentials",{
-      redirect:false,
-      callbackUrl:"/",
+    const res = await signIn("credentials", {
+      redirect: false,
+      callbackUrl: "/HeroSection",
       email,
-      password
-    })
+      password,
+    });
+
+    if (res?.ok) {
+      redirect("/HeroSection"); 
+    } else {
+      return "Invalid credentials";
+    }
+
   } catch (error) {
-   const someError = error as CredentialsSignin;
-   return someError.cause
+    const someError = error as CredentialsSignin;
+    return someError.cause || "Something went wrong";
   }
 }
 
@@ -44,4 +54,3 @@ export const registration = async (formData: FormData) => {
   console.log("user created")
   redirect("/Authentication/SignIn")
 };
-
