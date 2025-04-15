@@ -1,24 +1,18 @@
 "use client"
+import { Login } from "@/action/user";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react"
 
-type Props = {
-  submitting: (formData: FormData) => void;
-};
 
-function Form({ submitting }: Props) {
 
-  const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    submitting(formData);
-  }
+function Form() {
+
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center">
-      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6 rounded-lg border p-8 shadow-sm">
+      <form action={Login} className="w-full max-w-md space-y-6 rounded-lg border p-8 shadow-sm">
         <div className="space-y-2 text-center">
           <h1 className="text-2xl font-bold">Welcome back</h1>
           <p className="text-muted-foreground">Enter your credentials to sign in</p>
@@ -26,10 +20,10 @@ function Form({ submitting }: Props) {
 
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="username">username</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
-              name="username"
+              name="email"
               type="text"
               required
               placeholder="Enter your username"

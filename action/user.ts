@@ -2,9 +2,29 @@
 
 import { DBConnect } from "@/app/lib/DB";
 import User from "@/models/user";
-import { redirect } from "next/navigation";
-import NextError from "next/error";
 import {hash} from "bcryptjs"
+import { CredentialsSignin } from "next-auth";
+import { signIn } from "@/auth";
+
+export const Login=async(formData:FormData)=>{
+  const email = formData.get("email");
+  const password = formData.get("password")
+
+  try {
+    await signIn("credentials",{
+      redirect:false,
+      callbackUrl:"/",
+      email,
+      password
+    })
+  } catch (error) {
+   const someError = error as CredentialsSignin;
+   return someError.cause
+  }
+}
+
+
+
 export const registration = async (formData: FormData) => {
   const username = formData.get("username") as string || null
   const email = formData.get("email") as string || null
@@ -16,10 +36,11 @@ export const registration = async (formData: FormData) => {
   if (findingUser) {
     throw new Error("user already exists");
   }
-  const hashPassword = await hash(password, 10)
+ 
 
-
-  const createUser =await User.create({username,email,password:hashPassword,role});
+  const hashPassword = await hash(password, 10);
+  await User.create({ username, email, password: hashPassword, role });
+  
   console.log("user created")
   redirect("/Authentication/SignIn")
 };

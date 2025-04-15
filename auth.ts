@@ -12,36 +12,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-       authorize:async(credentials:any)=>{
+      authorize: async (credentials: any) => {
         const email = credentials.email as string;
-        const password = credentials.password 
+        const password = credentials.password as string;
 
-        if(!email || !password){
-          throw new CredentialsSignin("please provide both email and password")
+        if (!email || !password) {
+          throw new CredentialsSignin("Please provide both email and password");
         }
-        await DBConnect()
-          const findingUser = await User.find({email}).select("+password +role")
 
-          if(!findingUser){
-            throw new Error("invalid email or password")
-          }
-          if(!password){
-            throw new Error("invalid password")
-          }
+        await DBConnect();
 
-          const comparingPassword = await compare(password, findingUser.password);
+        // ✅ Use findOne instead of find
+        const user = await User.findOne({ email }).select("+password +role");
 
-          if(!comparingPassword){
-            throw new Error("password did not matched")
-          }
+        // ✅ Check if user exists
+        if (!user) {
+          throw new Error("Invalid email or password");
+        }
 
-          const data={
-            username: findingUser.username,
-            role:findingUser.role,
-            email:findingUser.email,
-          }
+        // ✅ Compare password
+        const isPasswordCorrect = await compare(password, user.password);
+        if (!isPasswordCorrect) {
+          throw new Error("Password did not match");
+        }
+
+        // ✅ Return user info to be stored in session
+        return {
+          id: user._id.toString(),
+          username: user.username,
+          email: user.email,
+          role: user.role,
+        };
       },
-      
     }),
-  ]
+  ],
 });
