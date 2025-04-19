@@ -1,22 +1,21 @@
 import mongoose, { model, models, Types } from "mongoose";
-import { title } from "process";
 
 const postSchema = new mongoose.Schema({
-  providerId:{
-    type:Number,
-    require:true
+  providerId: {
+    type: String,
+    required: true,
   },
   title: {
     type: String,
-    require: true,
+    required: true,  // Corrected from 'require' to 'required'
   },
   description: {
     type: String,
-    require: true,
+    required: true,  // Corrected from 'require' to 'required'
   },
   businessType: {
     type: String,
-    require: true,
+    required: true,  // Corrected from 'require' to 'required'
   },
   customer: [
     {
@@ -30,59 +29,59 @@ const postSchema = new mongoose.Schema({
   },
   duration: {
     type: String,
-    require: true,
+    required: true,  // Corrected from 'require' to 'required'
   },
   price: {
     type: String,
-    require: true,
+    required: true,  // Corrected from 'require' to 'required'
   },
-  paymentStatus:{
-    type:String,
-    require:true,
-    default:"unpaid",
-    enum:["paid","unpaid"]
+  paymentStatus: {
+    type: String,
+    required: true,
+    default: "unpaid",
+    enum: ["paid", "unpaid"],
   },
-  address:{
-    type:String,
-    require:true
+  address: {
+    type: String,
+    required: true,  // Corrected from 'require' to 'required'
   },
   location: {
     address: {
       type: String,
-      required: true, // You can make this required or not depending on your needs
+      required: true, // Can be optional based on your needs
     },
     latitude: {
-      type: Number,
-      required: true, // Required if the location is crucial
+      type: Number,  // Changed from String to Number
+      required: true, // Required if location is crucial
     },
     longitude: {
-      type: Number,
-      required: true, // Required if the location is crucial
+      type: Number,  // Changed from String to Number
+      required: true, // Required if location is crucial
     },
   },
-  status:{
-    type:String,
-    default:"pending",
-    enum:["Pending", "Completed", "Canceled"],
-    require:true,
+  status: {
+    type: String,
+    default: "Pending",
+    enum: ["Pending", "Completed", "Canceled"],
+    required: true,  // Corrected from 'require' to 'required'
   },
-  serviceTypt:{
-    type:String,
-    default:"In-person",
-    enum:["Online", "Phone call","In-person"]
+  serviceType: {  // Fixed typo from 'serviceTypt' to 'serviceType'
+    type: String,
+    default: "In-person",
+    enum: ["Online", "Phone call", "In-person"],
   },
   customerFeedback: {
-    rating:{
-      type:Number,
-      enum:["Great service!","Normal Service","Poor Service"]
-    }
+    rating: {
+      type: String,
+      enum: ["Great service!", "Normal Service", "Poor Service"],
+      required: false,  // Optional if no feedback is provided
+    },
   },
-  images:{
-    type:Array,
-    require:true
-  }
+  images: {
+    type: [String],  // Specify that images should be an array of strings
+    required: true,  // Corrected from 'require' to 'required'
+  },
 });
 
-
-const Post = models.postSchema || model("Post",postSchema)
-export default Post
+const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
+export default Post;

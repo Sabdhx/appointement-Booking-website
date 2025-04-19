@@ -1,13 +1,10 @@
 "use server"
-
 import { DBConnect } from "@/app/lib/DB";
 import User from "@/models/user";
 import {hash} from "bcryptjs"
 import { CredentialsSignin } from "next-auth";
 import { signIn } from "@/auth";
 import { redirect } from "next/navigation";
-import { PostFormData } from "@/app/Provider/PostCreationPage/page";
-import Post from "@/models/post";
 
 
 
@@ -57,9 +54,3 @@ export const registration = async (formData: FormData) => {
   redirect("/Authentication/SignIn")
 };
 
-export const postCreation=async(data:PostFormData)=>{
-  console.log(data)
-  await DBConnect();
-  const creatingPost = await Post.create(data)
-  return creatingPost
-}

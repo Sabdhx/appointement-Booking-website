@@ -19,7 +19,7 @@
 # print(round(result))
 
 
-# Array = ["orange", "banana","apple","strawberry"]
+Array = [1,2,3,4,5,6,7]
 # print(len(Array)) 
 
 
@@ -38,3 +38,39 @@
 # my_tuple = [1,2,3,4,5,6]
 # new_tuple = map(lambda x:x*2 , my_tuple)
 # print(list(new_tuple))
+
+# count = 1
+# while count < 5:
+#   count +=1
+#   print("hello world")
+#   if count < 3:
+#     print("hey count is equals to: ",count)
+#     break
+
+
+# count = 1
+# while count < 6:
+#   print("hey nate this is less then 6 ",count)
+#   count +=1
+#   if count == 5:
+#        print("Count is:", count)
+       
+  
+
+
+# count = 0
+# while count < 5:
+#     count += 1
+#     if count == 3:
+#         continue  # Skip the rest of the loop when count is 3
+
+# for i in Array:
+#   i+=1
+#   print(i)
+
+# def maizuuu():
+#   x = "hey bro get the back of here"
+#   print("maiza mootiii")
+#   return x
+# y = maizuuu()  
+# print(y)
