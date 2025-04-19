@@ -1,27 +1,23 @@
 // app/api/postCreation/route.ts
-import { DBConnect } from "@/app/lib/DB";
-import Post from "@/models/post";
 import { NextResponse } from "next/server";
+
+export const config = {
+  api: {
+    bodyParser: false, // This is crucial for file uploads
+  },
+};
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    await DBConnect();
-
-    const createdPost = await Post.create(body);
-    return NextResponse.json(createdPost); // return the created post
+    const formData = await req.formData();
+    console.log("Form data received. Keys:", [...formData.keys()]);
+    const images = formData.getAll("images");
+    console.log("Number of images received:", images.length);
+    return NextResponse.json({ 
+      received: true,
+      keys: [...formData.keys()],
+      imageCount: images.length 
+    })
   } catch (error) {
-    console.error("Error creating post:", error);
-    return NextResponse.json({ error: "Failed to create post" }, { status: 500 });
-  }
-}
-  // try {
-  //   console.log("Data being sent to DB:", data);
-  //   await DBConnect();
-  //   const creatingPost = await Post.create(data);
-  //   NextResponse.json({data:creatingPost})
-
-  // } catch (error) {
-  //   console.error("Error creating post:", error);
-  //   throw new Error("Error creating post");
-  // }
+    console.error("Error:", error)
+    return NextResponse.json({received: false, error: "Failed to process request"},{status: 500})}}

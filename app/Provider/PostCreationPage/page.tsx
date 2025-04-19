@@ -15,7 +15,7 @@ import {
 import { z } from "zod";
 import { useSession } from "next-auth/react";
 import Loading from "./loading";
-import { useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 
 const postSchema = z.object({
   title: z.string().min(1),
@@ -32,8 +32,8 @@ const postSchema = z.object({
   customerFeedback: z
     .enum(["Great service!", "Normal Service", "Poor Service"])
     .optional(),
-  // images: z.array(z.string()).min(1, { message: "At least one image is required" }),
-});
+    images: z.array(z.instanceof(File)).min(1, { message: "At least one image is required" })
+  });
 
 export type PostFormData = z.infer<typeof postSchema>;
 
@@ -41,10 +41,13 @@ export default function PostCreationPage() {
   const { data } = useSession();
   const providerId = data?.user?.id;
 
+ 
+
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     control,
     formState: { errors },
   } = useForm<PostFormData>({
@@ -72,26 +75,52 @@ export default function PostCreationPage() {
   }
 
   const onSubmit = async (data: PostFormData) => {
-    const wholeData = {
-      ...data,
-      providerId,
-      location: {
+    try {
+      // Create FormData object
+      const formData = new FormData();
+  
+      // Append all non-file fields
+      formData.append('title', data.title);
+      formData.append('description', data.description);
+      formData.append('businessType', data.businessType);
+      formData.append('duration', data.duration);
+      formData.append('price', data.price);
+      formData.append('address', data.address);
+      formData.append('latitude', data.latitude);
+      formData.append('longitude', data.longitude);
+      formData.append('paymentStatus', data.paymentStatus);
+      formData.append('status', data.status);
+      formData.append('serviceType', data.serviceType);
+      if (data.customerFeedback) {
+        formData.append('customerFeedback', data.customerFeedback);
+      }
+      formData.append('providerId', providerId);
+  
+      // Append location as JSON string
+      formData.append('location', JSON.stringify({
         address: data.address,
         latitude: Number(data.latitude),
         longitude: Number(data.longitude),
-      },
-    };
+      }));
   
-    const res = await fetch('/api/postCreation', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(wholeData),
-    });
-    const result = await res.json();
-    console.log(result);
+      // Append each image file
+      data.images.forEach((file, index) => {
+        formData.append(`images`, file);
+      });
+  
+      const res = await fetch('/api/postCreation', {
+        method: 'POST',
+        body: formData, // No Content-Type header needed, browser will set it automatically with boundary
+      });
+  
+      const result = await res.json();
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+    
     reset();
   };
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -179,16 +208,22 @@ export default function PostCreationPage() {
         )}
       />
 
-      {/* Placeholder image input */}
-      {/* <Input
-        placeholder="Image URL"
-        onChange={(e) =>
-          setValue("images", [e.target.value]) // simple single URL input
-        }
-      />
-      {errors.images && (
-        <p className="text-red-500">{errors.images.message}</p>
-      )} */}
+<Input
+  type="file"
+  multiple
+  accept="image/*"
+  onChange={(e:ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const fileArray = Array.from(files);
+      setValue("images", fileArray); // This sets the array of File objects
+    }
+  }}
+/>
+{errors.images && (
+  <p className="text-red-500">{errors.images.message}</p>
+)}
+
 
       <Button type="submit">Submit</Button>
     </form>

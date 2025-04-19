@@ -15,7 +15,6 @@ import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 function Navbar() {
   const route = useRouter();
   const session = useSession();
-  console.log(session);
 
   
   return (
