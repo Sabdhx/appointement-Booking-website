@@ -23,6 +23,7 @@ type PostData = {
   __v: number;
 };
 
+
 function Page({}: Props) {
   const { id } = useParams();
   const [data, setData] = useState<PostData | null>(null);
