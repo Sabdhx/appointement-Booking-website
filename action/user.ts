@@ -55,10 +55,14 @@ export const registration = async (formData: FormData) => {
   redirect("/Authentication/SignIn")
 };
 
-export const getAllPost=async()=>{
-  DBConnect()
-  const AllPOsts =await Post.find()
-  return AllPOsts
- }
+export const getAllPost = async () => {
+  DBConnect();
+  const allPosts = await Post.find();
+  const postsWithStringIds = allPosts.map(post => ({
+    ...post.toObject(),  // Convert the document to a plain object
+    _id: post._id.toString(),  // Convert _id to string
+  }));
 
+  return postsWithStringIds;
+};
 

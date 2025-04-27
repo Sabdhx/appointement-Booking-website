@@ -4,7 +4,12 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "../Loading";
 import Image from "next/image";
+import { Carousel,  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,} from "@/components/ui/carousel";
 
+  
 type Props = {};
 
 type PostData = {
@@ -45,15 +50,27 @@ function Page({}: Props) {
     <div className="min-h-screen bg-gray-100 flex justify-center items-center ">
       <div className="max-w-2xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Image */}
+      
+        <Carousel>
+  <CarouselContent>
+    {data.images.map((item) => (
+      <CarouselItem key={item}>
         <div className="w-full h-60 relative">
           <Image
-            src={data.images[0]}
+            src={item}
             alt="Post Image"
             layout="fill"
             objectFit="cover"
             className="rounded-t-lg"
           />
         </div>
+      </CarouselItem>
+    ))}
+  </CarouselContent>
+
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
 
         {/* Content */}
         <div className="p-6 space-y-4">
