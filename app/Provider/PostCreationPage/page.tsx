@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
-import { z } from "zod";
 import Loading from "./loading";
 
 type Props = {};
@@ -33,7 +32,6 @@ function PostCreation({}: Props) {
         method:"POST",
         body:formData
        })
-      //  const result =await res.json()
        console.log("result")
     } catch (error) {
       console.log(error.message)

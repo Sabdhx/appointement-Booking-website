@@ -4,24 +4,37 @@ const appointment = new Schema({
     clientId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      require:true
     },
     providerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      require:true
     },
-    service: {
-      type: String,
-      required: true,
+    postId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"Post",
+      require:true
+    },
+    name:{
+      type:String,
+      require:true
+    },
+    email:{
+      type:String,
+      require:true
+    },
+    description:{
+      type:String,
+      require:true
     },
     date: {
       type: String,
-      required: true,
+      require:true
     },
     time: {
       type: String,
-      required: true,
+      require:true
     },
     status: {
       type: String,

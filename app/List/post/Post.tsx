@@ -41,10 +41,9 @@ function Post({
       method: 'DELETE',
     })
     const result = await response.json()
-    console.log(result)
     }
    const router = useRouter();
-   console.log(_id)
+   console.log("this is the main id",_id)
  
 
   return (
