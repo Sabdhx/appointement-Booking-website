@@ -22,8 +22,7 @@ function Dashboard() {
         );
         const UsersPostInfo = await response.json();
         const Appointements = await fetching.json();
-        // console.log("UsersPostInfo", UsersPostInfo);
-        // console.log("Appointements", Appointements);
+
         setUser(UsersPostInfo.user);
         setAppointements(Appointements);
       } catch (error) {
