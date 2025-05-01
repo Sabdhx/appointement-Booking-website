@@ -18,7 +18,7 @@ function Dashboard() {
       try {
         const response = await fetch(`/api/singleUser?id=${id}`);
         const fetching = await fetch(
-          `/api/fetchAppointements?id=60d9f9b2f1f5b1d2e8c5f5b8`
+          `/api/fetchAppointements?id=${}`
         );
         const UsersPostInfo = await response.json();
         const Appointements = await fetching.json();
@@ -75,7 +75,7 @@ function Dashboard() {
             {appointements?.fetchingAppointments.map((item: any, index: number) => {
               return (
                 <>
-                  <ListOfAppointement key={index}  service={item.service} date={item.date} time={item.time} status={item.status}  />
+                  <ListOfAppointement key={index}  service={item.service} date={item.date} time={item.time} status={item.status}/>
                 </>
               );
             })}
