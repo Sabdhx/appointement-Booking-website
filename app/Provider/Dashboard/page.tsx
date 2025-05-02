@@ -18,7 +18,7 @@ function Dashboard() {
       try {
         const response = await fetch(`/api/singleUser?id=${id}`);
         const fetching = await fetch(
-          `/api/fetchAppointements?id=${}`
+          `/api/fetchAppointements?id=${id}`
         );
         const UsersPostInfo = await response.json();
         const Appointements = await fetching.json();
