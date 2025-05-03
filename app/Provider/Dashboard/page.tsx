@@ -20,8 +20,8 @@ function Dashboard() {
         const fetching = await fetch(
           `/api/fetchAppointements?id=${id}`
         );
-        const UsersPostInfo = await response.json();
-        const Appointements = await fetching.json();
+        // const UsersPostInfo = await response.json();
+        // const Appointements = await fetching.json();
 
         setUser(UsersPostInfo.user);
         setAppointements(Appointements);
