@@ -11,9 +11,9 @@ export const POST=async(request:Request)=> {
   const email = formData.get("email")
   const description = formData.get("description")
 
-  console.log(email)
+  console.log(username)
   try {
-    const newAppointement = await Appointment.create({clientId, providerId,postId,date,time,description,username})
+    const newAppointement = await Appointment.create({username,clientId, providerId,postId,date,time,description,email})
     if(!newAppointement){
         return NextResponse.json({message:"make sure u've entered the right information"})
     }

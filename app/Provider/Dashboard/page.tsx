@@ -20,8 +20,8 @@ function Dashboard() {
         const fetching = await fetch(
           `/api/fetchAppointements?id=${id}`
         );
-        // const UsersPostInfo = await response.json();
-        // const Appointements = await fetching.json();
+        const UsersPostInfo = await response.json();
+        const Appointements = await fetching.json();
 
         setUser(UsersPostInfo.user);
         setAppointements(Appointements);
@@ -51,34 +51,46 @@ function Dashboard() {
           <div className="flex gap-10">
             {/* Left Side: Posts */}
             <div className="w-[40%] grid grid-cols-1 ">
-              {user?.posts.map((item: any, index: number) => (
-                <>
-                  <Post
-                    title={item.title}
-                    description={item.description}
-                    businessType={item.businessType}
-                    duration={item.duration}
-                    price={item.price}
-                    paymentStatus={item.paymentStatus}
-                    serviceType={item.serviceType}
-                    images={item.images}
-                    bookingData={item.bookingData}
-                    providerId={item.providerId}
-                    id={id}
-                    _id={item._id}
-                  />
-                </>
-              ))}
+            {user?.posts.map((item: any, index: number) => (
+ <>
+ <div key={index}>
+ <Post
+      title={item.title}
+      description={item.description}
+      businessType={item.businessType}
+      duration={item.duration}
+      price={item.price}
+      paymentStatus={item.paymentStatus}
+      serviceType={item.serviceType}
+      images={item.images}
+      bookingData={item.bookingData}
+      providerId={item.providerId}
+      id={id}
+      _id={item._id}
+    />
+ </div>
+ </>
+   
+
+))}
             </div>
             <div className="flex-1/3  p-4 rounded-lg">
             {/* Right Side: Extra Content */}
             {appointements?.fetchingAppointments.map((item: any, index: number) => {
-              return (
-                <>
-                  <ListOfAppointement key={index}  service={item.service} date={item.date} time={item.time} status={item.status}/>
-                </>
-              );
-            })}
+  return (
+    <>
+      <div key={index}>
+        <ListOfAppointement
+          date={item.date}
+          time={item.time}
+          status={item.status}
+          description={item.description}
+        />
+      </div>
+    </>
+  );
+})}
+
           </div>
 
           </div>

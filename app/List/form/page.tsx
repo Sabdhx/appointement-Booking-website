@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker"; // ✅ Add this import
 import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 type Props = {
   providerId:String
@@ -29,7 +28,6 @@ function AppointmentForm({providerId,clientId}: Props) {
      formData.append("providerId", providerId)
      formData.append("clientId", clientId)
      formData.append("time", timeValue.format?.("hh:mm A"))
-
     }
     const formEnteries = Object.fromEntries(formData.entries())
     console.log(formEnteries)
