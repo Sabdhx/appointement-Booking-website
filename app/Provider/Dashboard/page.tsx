@@ -85,6 +85,8 @@ function Dashboard() {
           time={item.time}
           status={item.status}
           description={item.description}
+          username={item.username}
+          email={item.email}
         />
       </div>
     </>

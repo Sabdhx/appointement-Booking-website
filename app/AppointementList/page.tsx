@@ -17,9 +17,12 @@ type Props = {
   status: "pending" | "confirmed" | "cancelled";
   description: string;
   username:String
+  email:String
 };
 
-function ListOfAppointement({ description, status, date, time }: Props) {
+function ListOfAppointement({ description, status, date, time,email,username }: Props) {
+    const [appointmentDate, setAppointmentDate] = useState<Date | undefined>(new Date(date));
+   const [newStatus,setNewStatus] = useState<String>(status)
   const statusStyles = {
     pending: "bg-yellow-100 text-yellow-800",
     confirmed: "bg-green-100 text-green-800",
@@ -50,13 +53,23 @@ function ListOfAppointement({ description, status, date, time }: Props) {
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+      {/* User Info Section */}
+      <div className="mb-4 text-sm text-gray-600">
+        <p className="font-semibold text-2xl">
+          <span className="font-semibold text-gray-700">User:</span> {username}
+        </p>
+        <p className="font-semibold text-2xl">
+          <span className="font-semibold text-gray-700">Email:</span> {email}
+        </p>
+      </div>
+  
       {/* Header Section */}
       <div className="flex justify-between items-center mb-4">
         <div>
           <p className="text-sm text-gray-500">
             {new Date(date).toDateString()} • {time}
           </p>
-          <h2 className="text-lg font-semibold text-gray-800 mt-1">
+          <h2 className="text-lg font-medium text-gray-800 mt-1">
             {description}
           </h2>
         </div>
@@ -64,21 +77,19 @@ function ListOfAppointement({ description, status, date, time }: Props) {
           <span
             className={`text-sm font-medium px-3 py-1 rounded-full ${statusStyles[status]}`}
           >
-            {status}
           </span>
           <Select>
             <SelectTrigger className="w-[140px] border-gray-300">
-              <SelectValue placeholder="Change status" />
+              <SelectValue placeholder={`${newStatus}`} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="confirmed">Confirmed</SelectItem>
               <SelectItem value="cancelled">Cancelled</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
-
+  
       {/* Content Section */}
       <div className="flex flex-col md:flex-row gap-6">
         {/* Date Picker */}
@@ -88,11 +99,12 @@ function ListOfAppointement({ description, status, date, time }: Props) {
           </label>
           <Calendar
             mode="single"
-            selected={new Date(date)}
+            selected={appointmentDate}
+            onSelect={setAppointmentDate}
             className="rounded-md border w-full"
           />
         </div>
-
+  
         {/* Time Picker */}
         <div className="flex-1">
           <label className="block text-sm text-gray-600 mb-1">
@@ -109,9 +121,11 @@ function ListOfAppointement({ description, status, date, time }: Props) {
           />
         </div>
       </div>
+  
       <Button className="my-3" type="submit">Change</Button>
     </div>
   );
+  
 }
 
 export default ListOfAppointement;

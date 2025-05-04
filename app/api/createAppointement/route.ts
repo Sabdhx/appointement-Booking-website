@@ -13,6 +13,9 @@ export const POST=async(request:Request)=> {
 
   console.log(username)
   try {
+    if (!username) {
+      return NextResponse.json({ message: "Username is required" });
+    }
     const newAppointement = await Appointment.create({username,clientId, providerId,postId,date,time,description,email})
     if(!newAppointement){
         return NextResponse.json({message:"make sure u've entered the right information"})
