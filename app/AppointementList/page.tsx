@@ -16,13 +16,14 @@ type Props = {
   time: string;
   status: "pending" | "confirmed" | "cancelled";
   description: string;
-  username:String
-  email:String
+  username:string
+  email:string
+  _id:string
 };
 
-function ListOfAppointement({ description, status, date, time,email,username }: Props) {
+function ListOfAppointement({ description, status, date, time,email,username ,_id}: Props) {
     const [appointmentDate, setAppointmentDate] = useState<Date | undefined>(new Date(date));
-   const [newStatus,setNewStatus] = useState<String>(status)
+   const [newStatus,setNewStatus] = useState<string>(status)
   const statusStyles = {
     pending: "bg-yellow-100 text-yellow-800",
     confirmed: "bg-green-100 text-green-800",
@@ -51,6 +52,30 @@ function ListOfAppointement({ description, status, date, time,email,username }: 
     console.log(newDateTime?.format("hh:mm A"));
   };
 
+  console.log({mainValues:{
+    newStatus,
+    date:appointmentDate? appointmentDate.toDateString():"there is no value",
+    time: timeValue ? timeValue.format("hh:mm A") : "No time set"
+  }})
+
+ const handleEditAppointement=async()=>{
+ try {
+  const response = await fetch("/api/updateAppointement",{
+    method:"PUT",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+    status: newStatus,
+    date:appointmentDate? appointmentDate.toDateString():"there is no value",
+    time: timeValue ? timeValue.format("hh:mm A") : "No time set",
+    _id
+    })  
+  })
+ } catch (error) {
+   console.log(error)
+ }
+   }
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
       {/* User Info Section */}
@@ -78,13 +103,13 @@ function ListOfAppointement({ description, status, date, time,email,username }: 
             className={`text-sm font-medium px-3 py-1 rounded-full ${statusStyles[status]}`}
           >
           </span>
-          <Select>
-            <SelectTrigger className="w-[140px] border-gray-300">
+          <Select onValueChange={setNewStatus}>
+            <SelectTrigger className="w-[140px] border-gray-300" >
               <SelectValue placeholder={`${newStatus}`} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="cancelled">Cancelled</SelectItem>
+              <SelectItem value="pending" >Pending</SelectItem>
+              <SelectItem value="cancelled" >Cancelled</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -122,7 +147,7 @@ function ListOfAppointement({ description, status, date, time,email,username }: 
         </div>
       </div>
   
-      <Button className="my-3" type="submit">Change</Button>
+      <Button className="my-3" onClick={handleEditAppointement}>Change</Button>
     </div>
   );
   
