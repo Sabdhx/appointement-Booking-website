@@ -55,13 +55,37 @@ export const registration = async (formData: FormData) => {
   redirect("/Authentication/SignIn")
 };
 
-export const getAllPost = async () => {
+export const getAllPost = async (input:string) => {
   DBConnect();
-  const allPosts = await Post.find();
+  console.log(input)
+  const fiter = input ? {title:{$regex:input, $option:"i"}}:{}
+  const allPosts = await Post.find(
+    {fiter}
+  );
   const postsWithStringIds = allPosts.map(post => ({
     ...post.toObject(),  // Convert the document to a plain object
     _id: post._id.toString(),  // Convert _id to string
   }));
+
+  return postsWithStringIds;
+};
+
+export const getUserAppointedPost = async (clientId: string) => {
+  DBConnect();
+  console.log("clientId", clientId);
+
+  const filter = clientId ? { customer: { $in: [clientId] } } : {};
+
+  const allPosts = await Post.find(filter);
+ console.log(allPosts)
+  const postsWithStringIds = allPosts.map(post => {
+    const plainPost = post.toObject();
+    return {
+      ...plainPost,
+      _id: plainPost._id.toString(),
+      customer: plainPost.customer.map((id: any) => id.toString()),
+    };
+  });
 
   return postsWithStringIds;
 };

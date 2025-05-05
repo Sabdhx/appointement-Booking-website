@@ -52,11 +52,7 @@ function ListOfAppointement({ description, status, date, time,email,username ,_i
     console.log(newDateTime?.format("hh:mm A"));
   };
 
-  console.log({mainValues:{
-    newStatus,
-    date:appointmentDate? appointmentDate.toDateString():"there is no value",
-    time: timeValue ? timeValue.format("hh:mm A") : "No time set"
-  }})
+  
 
  const handleEditAppointement=async()=>{
  try {

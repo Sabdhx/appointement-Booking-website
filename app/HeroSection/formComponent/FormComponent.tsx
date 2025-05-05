@@ -14,7 +14,7 @@ export default function FormComponent({ submitting}: { submitting:(formData: For
       <Input
         name="Input" 
         className="w-[500px] inline mx-3"
-        placeholder="Enter your name"
+        placeholder="Enter profession"
       />
       <Button type="submit">Submit</Button>
     </form>

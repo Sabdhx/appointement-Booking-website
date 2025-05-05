@@ -14,7 +14,7 @@ type Props = {
 function AppointmentForm({providerId,clientId}: Props) {
   const {id} = useParams()
   const postId = id
-
+  const [message,setMessage] = useState("")
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [timeValue, setTimeValue] = useState<DateObject | null>();
 
@@ -36,13 +36,15 @@ function AppointmentForm({providerId,clientId}: Props) {
       method:"POST",
       body:formData
      })
+     const result =await response.json()
+     setMessage(result.message)
     } catch (error) {
       console.log(error.message)
     }
    
    
   };
-  
+  console.log(message)
   const handleDateChange = (newDateTime:any)=>{  
     setTimeValue(newDateTime)
     console.log(newDateTime.format?.("hh:mm A"))
@@ -77,6 +79,11 @@ function AppointmentForm({providerId,clientId}: Props) {
           <Button type="submit" className="my-4">Submit</Button>
         </div>
       </div>
+     <div className="flex justify-center">
+      <div>
+        
+       <p className="">{message}</p> </div>
+     </div>
     </form>
   );
 }

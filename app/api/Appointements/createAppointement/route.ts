@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import Appointment from "@/models/appointement";
+import Post from "@/models/post";
 export const POST=async(request:Request)=> {
   const formData = await request.formData()
   const clientId = formData.get("clientId")
@@ -11,12 +12,19 @@ export const POST=async(request:Request)=> {
   const email = formData.get("email")
   const description = formData.get("description")
 
-  console.log(username)
+  
   try {
-    if (!username) {
-      return NextResponse.json({ message: "Username is required" });
+    const filter = clientId ? { customer: { $in: [clientId] } } : {};
+    const allPosts = await Post.find(filter);
+    if(allPosts){
+      return NextResponse.json({message:"post can be booked by only one time"})
     }
     const newAppointement = await Appointment.create({username,clientId, providerId,postId,date,time,description,email})
+    const idInPostSchema = await Post.findOne({_id:postId});
+    console.log(idInPostSchema.customer.push(clientId))
+    console.log(idInPostSchema)
+   await idInPostSchema.save()
+    console.log(idInPostSchema)
     if(!newAppointement){
         return NextResponse.json({message:"make sure u've entered the right information"})
     }

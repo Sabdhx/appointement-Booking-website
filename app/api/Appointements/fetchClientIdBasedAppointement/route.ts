@@ -13,24 +13,4 @@ export const GET=async(request:Request)=>{
 }
 
 
-  {/* {
-              appointements?.fetchingAppointments?.map((item:Appointement)=>{
-                      return(
-                        <>
-                        <div key={item._id}>
-               <ListOfAppointement
-               _id={item._id}
-                 date={item.date}
-                 time={item.time}
-                 status={item.status}
-                 description={item.description}
-                 username={item.username}
-                 email={item.email}
-               />
-             </div>
-                        </>
-                      )
-              })
-               
-            } */}
-            
+  

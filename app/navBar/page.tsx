@@ -25,7 +25,7 @@ function Navbar() {
             <MenubarMenu>
               {session?.data?.user?.role  === "provider" ? (
                 <>
-                 <MenubarTrigger onClick={() => redirect("/")}>
+                 <MenubarTrigger onClick={() => redirect("/HeroSection")}>
                     Home
                   </MenubarTrigger>
                   <MenubarTrigger
@@ -44,7 +44,7 @@ function Navbar() {
                  
                   <MenubarTrigger
                     onClick={() => {
-                      signOut({ callbackUrl: "/HeroSection" });
+                      signOut({ callbackUrl: "/" });
                     }}
                   >
                     Logout
@@ -52,7 +52,7 @@ function Navbar() {
                 </>
               ) : (
                 <>
-                 <MenubarTrigger onClick={() => redirect("/")}>
+                 <MenubarTrigger onClick={() => redirect("/HeroSection")}>
                     Home
                   </MenubarTrigger>
                   <MenubarTrigger onClick={() => redirect("/List")}>
@@ -65,7 +65,7 @@ function Navbar() {
                   </MenubarTrigger>
                   <MenubarTrigger
                     onClick={() => {
-                      signOut({ callbackUrl: "/HeroSection" });
+                      signOut({ callbackUrl: "/" });
                     }}
                   >
                     Logout
