@@ -59,6 +59,11 @@ function Navbar() {
                     List
                   </MenubarTrigger>
                   <MenubarTrigger
+                    onClick={() => redirect("/normalUser/Dashboard")}
+                  >
+                    Dashboard
+                  </MenubarTrigger>
+                  <MenubarTrigger
                     onClick={() => {
                       signOut({ callbackUrl: "/HeroSection" });
                     }}

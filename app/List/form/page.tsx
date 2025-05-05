@@ -32,7 +32,7 @@ function AppointmentForm({providerId,clientId}: Props) {
     const formEnteries = Object.fromEntries(formData.entries())
     console.log(formEnteries)
     try {
-    const response = await fetch("/api/createAppointement",{
+    const response = await fetch("/api/Appointements/createAppointement",{
       method:"POST",
       body:formData
      })
@@ -74,7 +74,7 @@ function AppointmentForm({providerId,clientId}: Props) {
             </div>
           </div>
           <Textarea name="description" rows={3} className="mt-4" placeholder="Description" />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="my-4">Submit</Button>
         </div>
       </div>
     </form>

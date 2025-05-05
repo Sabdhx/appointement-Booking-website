@@ -60,7 +60,7 @@ function ListOfAppointement({ description, status, date, time,email,username ,_i
 
  const handleEditAppointement=async()=>{
  try {
-  const response = await fetch("/api/updateAppointement",{
+  const response = await fetch("/api/Appointements/updateAppointement",{
     method:"PUT",
     headers:{
       "Content-Type":"application/json"

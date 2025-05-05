@@ -118,12 +118,24 @@ function Page({}: Props) {
             </span>
           </div>
           {
-            data?.user?.role !== "provider" && <Button className="w-[200px]" onClick={handleIsOpen}>Book an Appointement</Button>
-          }
-        </div>
-        {
-          isOpen && <AppointmentForm clientId={clientId} providerId={Data.providerId} />
-        }
+  data?.user?.role !== "provider" && (
+    <Button className="w-[200px]" onClick={handleIsOpen}>
+      Book an Appointment
+    </Button>
+  )
+}
+</div>
+
+<div
+  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+    isOpen ? 'max-h-[1000px] opacity-100 scale-100' : 'max-h-0 opacity-0 scale-95'
+  }`}
+>
+  {isOpen && (
+    <AppointmentForm clientId={clientId} providerId={Data.providerId} />
+  )}
+</div>
+
       </div>
     </div>
   );

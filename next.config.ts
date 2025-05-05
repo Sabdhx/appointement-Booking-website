@@ -16,7 +16,8 @@ const nextConfig: NextConfig = {
       }
     ],
   },
- 
+  swcMinify: true,
+
     turbo: true,
 
 };
