@@ -58,9 +58,10 @@ export const registration = async (formData: FormData) => {
 export const getAllPost = async (input:string) => {
   DBConnect();
   console.log(input)
-  const fiter = input ? {title:{$regex:input, $option:"i"}}:{}
+  const fiter = input ? {title:{$regex:input, $options:"i"}}:{}
+  console.log(fiter)
   const allPosts = await Post.find(
-    {fiter}
+    fiter
   );
   const postsWithStringIds = allPosts.map(post => ({
     ...post.toObject(),  // Convert the document to a plain object
