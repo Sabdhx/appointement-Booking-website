@@ -16,13 +16,13 @@ export const Login = async (formData: FormData) => {
   try {
     const res = await signIn("credentials", {
       redirect: false,
-      callbackUrl: "/HeroSection",
+      callbackUrl: "/",
       email,
       password,
     });
 
     if (res?.ok) {
-      redirect("/HeroSection"); 
+      redirect("/"); 
     } else {
       return "Invalid credentials";
     }
@@ -64,10 +64,9 @@ export const getAllPost = async (input:string) => {
     fiter
   );
   const postsWithStringIds = allPosts.map(post => ({
-    ...post.toObject(),  // Convert the document to a plain object
-    _id: post._id.toString(),  // Convert _id to string
+    ...post.toObject(), 
+    _id: post._id.toString(), 
   }));
-
   return postsWithStringIds;
 };
 

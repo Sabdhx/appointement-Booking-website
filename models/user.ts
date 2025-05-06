@@ -3,7 +3,7 @@ import { model, models, Schema, Types } from "mongoose";
 const user = new Schema({
   role: {
     type: String,
-    enum: ["normalUser", "provider"],
+    enum: ["normalUser", "provider","Admin"],
   },
   username: {
     type: String,

@@ -43,8 +43,8 @@ function Dashboard() {
         <div className="max-w-6xl mx-auto">
           {/* User Info Section */}
           <div className="bg-white shadow-md rounded-lg p-6 mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome👋</h1>
-            <p className="text-gray-600">Email</p>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome👋 {data?.user?.name}</h1>
+            <p className="text-gray-600">Email {data?.user?.email}</p>
           </div>
 
           {/* Posts Section */}

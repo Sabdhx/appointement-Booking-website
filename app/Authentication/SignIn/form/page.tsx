@@ -15,7 +15,7 @@ function Form() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     Login(formData);
-    redirect("/HeroSection")
+    redirect("/")
   }
   return (
     <div className="flex min-h-[70vh] items-center justify-center">
