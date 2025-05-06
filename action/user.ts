@@ -90,3 +90,25 @@ export const getUserAppointedPost = async (clientId: string) => {
   return postsWithStringIds;
 };
 
+export const AllUsers = async () => {
+  await DBConnect();
+
+  const users = await User.find({ role: { $ne: "admin" } });
+
+  const safeUsers = users.map((user) => {
+    const plainUser = user.toObject();
+
+    return {
+      _id: plainUser._id.toString(),
+      username: plainUser.username || "",
+      email: plainUser.email || "",
+      image: plainUser.image || "",
+      role: plainUser.role || "",
+      posts: Array.isArray(plainUser.posts)
+        ? plainUser.posts.map((p) => (typeof p === "object" && p._id ? p._id.toString() : p))
+        : [],
+    };
+  });
+
+  return safeUsers;
+};

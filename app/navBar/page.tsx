@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,11 +11,12 @@ import {
 import { redirect, useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
+import { AllUsers } from "@/action/user";
 
 function Navbar() {
   const route = useRouter();
   const session = useSession();
-
+ 
   return (
     <div>
       {session?.data?.user ? (
