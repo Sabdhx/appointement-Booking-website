@@ -28,7 +28,7 @@ type ChartConfig = {
 
 function Dashboard() {
   const [users, setUsers] = useState<User[]>([]);
-
+  const  [catagory, setCatagory] = useState([]);
   const data = [
     { name: "Haircut", value: 10 },
     { name: "Massage", value: 15 },
@@ -46,16 +46,17 @@ function Dashboard() {
     style: {},
   };
 
-  // Fetch users on mount
   useEffect(() => {
     const fetchUsers = async () => {
       const response = await AllUsers();
+      const catagoryResponse = await fetch("/api/catagory")
+      const catagory =await catagoryResponse.json();
+      setCatagory(catagory)
       setUsers(response || []);
     };
     fetchUsers();
   }, []);
 
-  // Delete user function
   const handleDeleteUser = async (id: string) => {
     const res = await fetch(`/api/Users/deleteUser?id=${id}`, {
       method: "DELETE",
@@ -66,7 +67,7 @@ function Dashboard() {
       console.error("Failed to delete user");
     }
   };
-
+  
   return (
     <>
       <div className="shadow-md rounded-lg p-6 mb-8 my-6">
@@ -77,7 +78,6 @@ function Dashboard() {
       </div>
 
       <div className="flex justify-center gap-[20vw] mx-[6vw] bg-gray-300">
-        {/* Chart Section */}
         <div>
           <h1 className="text-5xl font-medium my-5">Data Chart</h1>
           <ChartContainer config={config} style={{ width: 500, height: 400 }}>
@@ -88,7 +88,6 @@ function Dashboard() {
           </ChartContainer>
         </div>
 
-        {/* User List Section */}
         <div>
           <h1 className="text-5xl font-medium py-[2vh]">User's List</h1>
           {users.map((item) => (
@@ -112,6 +111,23 @@ function Dashboard() {
             </div>
           ))}
         </div>
+      </div>
+      <div className="">
+        
+         <div className="bg-gradient-to-br from-gray-200 to-gray-400 w-[90%] md:w-[40%] mx-[6vw] my-8 rounded-2xl shadow-lg p-6">
+  <h1 className="text-3xl font-bold text-gray-800 mb-6 border-b pb-2 border-gray-500">
+    Categories
+  </h1>
+  
+  {catagory?.message?.map((item, index) => (
+    <div
+      key={index}
+      className="bg-gray-100 hover:bg-gray-200 transition duration-300 rounded-xl p-4 mb-3 shadow-sm"
+    >
+      <h2 className="text-lg text-gray-700 font-medium">{item}</h2>
+    </div>
+  ))}
+</div>
       </div>
     </>
   );

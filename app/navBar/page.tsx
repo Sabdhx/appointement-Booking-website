@@ -27,7 +27,7 @@ function Navbar() {
                 <MenubarTrigger onClick={() => redirect("/")}>Home</MenubarTrigger>
                 <MenubarTrigger onClick={() => redirect("/admin/dashboard")}>Dashboard</MenubarTrigger>
                 <MenubarTrigger onClick={() => redirect("/admin/reports")}>Reports</MenubarTrigger>
-                <MenubarTrigger onClick={() => redirect("/admin/users")}>Users</MenubarTrigger>
+                {/* <MenubarTrigger onClick={() => redirect("/admin/users")}>Users</MenubarTrigger> */}
                 <MenubarTrigger onClick={() => redirect("/admin/categories")}>Categories</MenubarTrigger>
                 <MenubarTrigger onClick={() => signOut({ callbackUrl: "/" })}>Logout</MenubarTrigger>
               </MenubarMenu>
