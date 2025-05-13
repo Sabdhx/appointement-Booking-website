@@ -64,6 +64,7 @@ function Page({}: Props) {
   if (!Data) {
     return <Loading />;
   }
+  console.log("postId",Data._id)
   console.log(Data.providerId);
   return (
     <div className="min-h-screen w-screen bg-gray-100 flex flex-col">
@@ -166,7 +167,9 @@ function Page({}: Props) {
         </div>
         <div>
           {isReport && !isOpen && (
-            <ReportComponent  clientId={clientId} providerId={Data.providerId}/>
+            <ReportComponent  clientId={clientId} providerId={Data.providerId}
+             postId={Data._id}
+            />
           )}
         </div>
         

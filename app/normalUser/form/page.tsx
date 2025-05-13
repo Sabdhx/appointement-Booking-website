@@ -7,9 +7,11 @@ import React from "react";
 type Props = {
   clientId: string;
   providerId: string;
+  postId:string
+  appointmentId:string
 };
 
-function ReportComponent({ clientId, providerId }: Props) {
+function ReportComponent({ clientId, providerId,postId ,appointmentId}: Props) {
   const { data } = useSession();
 
   const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,10 +25,13 @@ function ReportComponent({ clientId, providerId }: Props) {
       formData.append("reporttype", "profile");
       formData.append("reporterId", providerId);
       formData.append("reportedUserId", clientId);
+            formData.append("appointmentId",appointmentId)
+
     } else {
-      formData.append("reporttype", "appointment");
+      formData.append("reporttype", "post");
       formData.append("reporterId", clientId);
       formData.append("reportedUserId", providerId);
+      formData.append("postId",postId)
     }
 
     try {
@@ -56,13 +61,13 @@ function ReportComponent({ clientId, providerId }: Props) {
         <Input
           name="reason"
           placeholder="Enter the reason for report"
-          className="w-[50vw] mb-4"
+          className="w-[30vw] mb-4"
           required
         />
         <Input
           name="message"
           placeholder="Enter a detailed message"
-          className="w-[50vw] mb-4"
+          className="w-[30vw] mb-4"
           required
         />
         <Button type="submit">Submit</Button>

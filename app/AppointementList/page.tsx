@@ -10,6 +10,7 @@ import {
 import React, { useState, useEffect } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import ReportComponent from "../normalUser/form/page";
 
 type Props = {
   date: string;
@@ -18,10 +19,14 @@ type Props = {
   description: string;
   username:string
   email:string
-  _id:string
+  _id:string;
+  isOpen:boolean
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  providerId:string | undefined
+  clientId:string
 };
 
-function ListOfAppointement({ description, status, date, time,email,username ,_id}: Props) {
+function ListOfAppointement({setIsOpen, description, status, date, time,email,username ,_id,isOpen,clientId,providerId}: Props) {
     const [appointmentDate, setAppointmentDate] = useState<Date | undefined>(new Date(date));
    const [newStatus,setNewStatus] = useState<string>(status)
   const statusStyles = {
@@ -75,13 +80,22 @@ function ListOfAppointement({ description, status, date, time,email,username ,_i
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
       {/* User Info Section */}
-      <div className="mb-4 text-sm text-gray-600">
-        <p className="font-semibold text-2xl">
+      <div className="mb-4 text-sm text-gray-600 flex justify-between items-center">
+        <div>
+ <p className="font-semibold text-2xl">
           <span className="font-semibold text-gray-700">User:</span> {username}
         </p>
         <p className="font-semibold text-2xl">
           <span className="font-semibold text-gray-700">Email:</span> {email}
         </p>
+        </div>
+        <div>
+          {
+            providerId &&           <Button className="bg-red-600 m-[20px]" onClick={()=>setIsOpen(!isOpen)}>Report</Button>
+
+          }
+        </div>
+       
       </div>
   
       {/* Header Section */}
@@ -127,8 +141,10 @@ function ListOfAppointement({ description, status, date, time,email,username ,_i
         </div>
   
         {/* Time Picker */}
-        <div className="flex-1">
-          <label className="block text-sm text-gray-600 mb-1">
+        <div className="flex-1 ">
+          {/* <div className="grid grid-cols-1"> */}
+            <div>
+ <label className="block text-sm text-gray-600 mb-1">
             Appointment Time
           </label>
           <DatePicker
@@ -140,10 +156,21 @@ function ListOfAppointement({ description, status, date, time,email,username ,_i
             className="w-full"
             inputClass="w-full border rounded-md px-3 py-2"
           />
+          </div>
+      
+            <div>
+
+          </div>
+         
         </div>
+        
+
       </div>
+         <Button className="my-3" onClick={handleEditAppointement}>Change</Button>
+
+        { isOpen && <ReportComponent appointmentId={_id} providerId={providerId} clientId={clientId} />}
+
   
-      <Button className="my-3" onClick={handleEditAppointement}>Change</Button>
     </div>
   );
   

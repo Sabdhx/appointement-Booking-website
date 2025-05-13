@@ -15,7 +15,7 @@ export const POST=async(request:Request)=> {
   
   try {
     const filter = clientId ? { customer: { $in: [clientId] } } : {};
-    const allPosts = await Post.find(filter);
+    const allPosts = await Post.findOne(filter);
     if(allPosts){
       return NextResponse.json({message:"post can be booked by only one time"})
     }

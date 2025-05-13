@@ -12,12 +12,19 @@ const ReportSchema = new mongoose.Schema({
   reporttype: {
     type: String,
     required: true,
-    enum: ["appointment", "profile"],
+    enum: ["post", "profile"],
   },
   
   reason: {
     type: String,
     required: true,
+  },
+  postId: {
+  type: Types.ObjectId,
+  ref: "Post",
+},
+    appointmentId: {
+    type: String,
   },
   message: {
     type: String,
