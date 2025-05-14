@@ -35,7 +35,7 @@ function ReportComponent({ clientId, providerId,postId ,appointmentId}: Props) {
     }
 
     try {
-      const response = await fetch("/api/Reporting", {
+      const response = await fetch("/api/create/Reports", {
         method: "POST",
         body: formData,
       });
